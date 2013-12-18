@@ -13,7 +13,6 @@ function onKeyUp(event)
 }
 
 self.port.on("show", function onShow(tabLst) {
-    console.log("show triggered");
     tabList = tabLst;
     createTable();
     window.addEventListener("keyup", onKeyUp, false);
@@ -30,7 +29,7 @@ function createTable()
         var row = new_tbody.insertRow(count);
         var cell = row.insertCell(0);
         var element = document.createElement("img");
-        //element.src = tab.icon;
+        element.src = tab.icon;
         cell.appendChild(element);
 
         cell = row.insertCell(1);
@@ -38,10 +37,10 @@ function createTable()
         element.innerHTML = tab.title;
         cell.appendChild(element);
 
-        cell = row.insertCell(2);
-        element = document.createElement("label");
-        element.innerHTML = tab.url;
-        cell.appendChild(element);
+        //cell = row.insertCell(2);
+        //element = document.createElement("label");
+        //element.innerHTML = tab.url;
+        //cell.appendChild(element);
 
         count++;
 
@@ -65,7 +64,6 @@ self.port.on("cycleTabs", function onCycleTabs() {
     return;
 }
 
-console.log("length: " + rows.length);
 if (rows.length === 1)
 {
     selectedIndex = 0;
