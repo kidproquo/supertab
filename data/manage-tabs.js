@@ -1,19 +1,26 @@
 var selectedIndex = 0;
 var rowCount = 0;
 var rows = [];
+var tabList = [];
 
-self.port.on("show", function onShow(tabList) {
-    createTable(tabList);
-    window.addEventListener("keyup", function(event)
-    {
-        if (event.keyCode === 18) { //TOOD: remove hardcoded number
-            self.port.emit("dismiss", selectedIndex)
-        }
-    }, false);
+function onKeyUp(event)
+{
+    if (event.keyCode === 18) { //TOOD: remove hardcoded number
+        self.port.emit("dismissPanel", tabList[selectedIndex].id);
+        window.removeEventListener("keyup", onKeyUp, false);
+
+    }
+}
+
+self.port.on("show", function onShow(tabLst) {
+    console.log("show triggered");
+    tabList = tabLst;
+    createTable();
+    window.addEventListener("keyup", onKeyUp, false);
     window.focus();
 });
 
-function createTable(tabList)
+function createTable()
 {
     var old_tbody = document.getElementById("tabTable").getElementsByTagName('tbody')[0];
     var new_tbody = document.createElement('tbody');
@@ -23,7 +30,7 @@ function createTable(tabList)
         var row = new_tbody.insertRow(count);
         var cell = row.insertCell(0);
         var element = document.createElement("img");
-        element.src = tab.icon;
+        //element.src = tab.icon;
         cell.appendChild(element);
 
         cell = row.insertCell(1);
@@ -36,32 +43,43 @@ function createTable(tabList)
         element.innerHTML = tab.url;
         cell.appendChild(element);
 
-        if (count == 0)
-        {
-            row.className = 'highlighted';
-        }
-
         count++;
 
     }
     old_tbody.parentNode.replaceChild(new_tbody, old_tbody);
-    selectedIndex = 0;
+    selectedIndex = count > 1 ? 1 : 0;
     rowCount = count;
     rows = new_tbody.getElementsByTagName('tr');
+    if (rows.length > 0) {
+        rows[selectedIndex].className = 'highlighted';
+    }
+
+    self.port.emit('resize', 
+            { width: document.documentElement.clientWidth, 
+                height: document.documentElement.clientHeight });
 }
 
 self.port.on("cycleTabs", function onCycleTabs() {
-    var prevIndex = selectedIndex;
-    selectedIndex++;
-    if (selectedIndex === rowCount)
-    {
-        selectedIndex = 0;
-    }
-//i   if (rows.length == 0)
-    //{
-        //return;
-    //}
-    rows[selectedIndex].className = 'highlighted';
-    rows[prevIndex].className = '';
+    if (rows.length === 0)
+{
+    return;
+}
+
+console.log("length: " + rows.length);
+if (rows.length === 1)
+{
+    selectedIndex = 0;
+    rows[0].className = 'highlighted';
+    return;
+}
+
+var prevIndex = selectedIndex;
+selectedIndex++;
+if (selectedIndex === rowCount)
+{
+    selectedIndex = 0;
+}
+rows[selectedIndex].className = 'highlighted';
+rows[prevIndex].className = '';
 });
 
