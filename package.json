@@ -1,9 +1,28 @@
 {
-  "name": "supertab",
-  "title": "supertab",
-  "id": "jid1-4CGBIWqFeBx1yg",
-  "description": "a basic add-on",
-  "author": "",
-  "license": "MPL 2.0",
-  "version": "0.1"
+    "name": "supertab",
+    "title": "Supertab",
+    "id": "jid1-4CGBIWqFeBx1yg",
+    "description": "a basic add-on",
+    "author": "",
+    "license": "MPL 2.0",
+    "version": "0.1",
+
+    "preferences": [
+    {
+        "name": "activateKey",
+        "type": "radio",
+        "title": "Activating Key Combination",
+        "value": "ctrl",
+        "options": [
+        {
+            "value": "ctrl",
+            "label": "Ctrl-Tab"
+        },
+        {
+            "value": "alt",
+            "label": "Alt-Tab"
+        }
+        ]
+    }
+    ]
 }
