@@ -2,8 +2,8 @@
     "name": "supertab",
     "title": "Supertab",
     "id": "jid1-4CGBIWqFeBx1yg",
-    "description": "a basic add-on",
-    "author": "",
+    "description": "Gives you a list of tabs in Most Recently Used (MRU) order. Triggered by Ctrl-Tab or Alt-Tab.",
+    "author": "Prince Samuel",
     "license": "MPL 2.0",
     "version": "0.1",
 
@@ -11,7 +11,8 @@
     {
         "name": "activateKey",
         "type": "radio",
-        "title": "Activating Key Combination",
+        "title": "Trigger Key Combination",
+        "description": "Note: Use Alt-Tab only with Macs.",
         "value": "ctrl",
         "options": [
         {
@@ -23,6 +24,13 @@
             "label": "Alt-Tab"
         }
         ]
+    },
+    {
+        "description": "How many tabs to be tracked for each window?",
+        "type": "integer",
+        "name": "maxTabs",
+        "value": 20,
+        "title": "Tab count"
     }
     ]
 }

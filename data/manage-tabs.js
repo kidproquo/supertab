@@ -5,8 +5,8 @@ var tabList = [];
 
 function onKeyUp(event)
 {
-    //console.log(event.keyCode);
-    if (event.keyCode === 18) { //TOOD: remove hardcoded number
+    //lazy way to determine keyup - 17 is ctrl, 18 is alt
+    if (event.keyCode === 17 || event.keyCode === 18) {
         self.port.emit("dismissPanel", tabList[selectedIndex].id);
         window.removeEventListener("keyup", onKeyUp, false);
 
