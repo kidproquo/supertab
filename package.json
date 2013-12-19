@@ -31,6 +31,13 @@
         "name": "maxTabs",
         "value": 20,
         "title": "Max Tab Count"
+    },
+    {
+    "description": "Focus previous MRU tab on tab close?",
+    "type": "bool",
+    "name": "activatePrevious",
+    "value": true,
+    "title": "Focus Last Tab"
     }
     ]
 }
