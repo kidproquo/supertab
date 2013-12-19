@@ -1,1 +1,1 @@
-Simple Firefox addon (inspired by LastTab, which sadly doesn't work anymore). Addon provides a list of tabs in MRU order. Triggered by Ctrl-Tab or Alt-Tab.  
+Simple Firefox addon (inspired by LastTab, which sadly doesn't work anymore). Addon provides a list of tabs in MRU order. Triggered by Ctrl-Tab or Alt-Tab. Tab management is window-centric - you only see an MRU list of tabs from the currently focused window.
