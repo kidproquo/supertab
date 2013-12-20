@@ -2,6 +2,7 @@ var selectedIndex = 0;
 var rowCount = 0;
 var rows = [];
 var tabList = [];
+var maxTitleLength = 50;
 
 function onKeyUp(event)
 {
@@ -25,11 +26,16 @@ function createTable(reverse)
     var old_tbody = document.getElementById("tabTable").getElementsByTagName('tbody')[0];
     var new_tbody = document.createElement('tbody');
     var count = 0;
+    var title = "";
     for each (var tab in tabList)
     {
         var row = new_tbody.insertRow(count);
         var cell = row.insertCell(0);
-        element = document.createTextNode(tab.title);
+        title = tab.title; 
+        if (title.length > maxTitleLength) {
+            title = title.substring(0, maxTitleLength) + " ...";
+        }
+        element = document.createTextNode(title);
         cell.appendChild(element);
 
         count++;
