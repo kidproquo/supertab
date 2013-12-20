@@ -29,19 +29,8 @@ function createTable(reverse)
     {
         var row = new_tbody.insertRow(count);
         var cell = row.insertCell(0);
-        //var element = document.createElement("img");
-        //element.src = tab.icon;
-        //cell.appendChild(element);
-
-        //cell = row.insertCell(1);
-        element = document.createElement("label");
-        element.innerHTML = tab.title;
+        element = document.createTextNode(tab.title);
         cell.appendChild(element);
-
-        //cell = row.insertCell(2);
-        //element = document.createElement("label");
-        //element.innerHTML = tab.url;
-        //cell.appendChild(element);
 
         count++;
 
