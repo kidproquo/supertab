@@ -31,6 +31,12 @@ function createTable(reverse)
     {
         var row = new_tbody.insertRow(count);
         var cell = row.insertCell(0);
+        var element = document.createElement("img");
+        element.src = tab.icon;
+        element.style.height = "16px";
+        cell.appendChild(element);
+
+        cell = row.insertCell(1);
         title = tab.title; 
         if (title.length > maxTitleLength) {
             title = title.substring(0, maxTitleLength) + " ...";
