@@ -8,7 +8,7 @@ var selectedIndex = 0;
 var rowCount = 0;
 var rows = [];
 var tabList = [];
-var maxTitleLength = 60;
+var maxTitleLength = 50;
 
 function onKeyUp(event)
 {
@@ -20,11 +20,14 @@ function onKeyUp(event)
     }
 }
 
-self.port.on("show", function onShow(tabLst, reverse) {
-    tabList = tabLst;
-    createTable(reverse);
+self.port.on("show", function onShow() {
     window.addEventListener("keyup", onKeyUp, false);
     window.focus();
+});
+
+self.port.on("create", function onShow(tabLst, reverse) {
+    tabList = tabLst;
+    createTable(reverse);
 });
 
 function createTable(reverse)
