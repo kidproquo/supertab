@@ -39,22 +39,23 @@ function createTable(reverse)
     for each (var tab in tabList)
     {
         var row = new_tbody.insertRow(count);
-        var cell = document.createElement('td'); //row.insertCell(1);
+        var cell = document.createElement('td'); 
         var element = document.createElement("img");
-        element.src = tab.icon;
+        element.src = tab === undefined || tab.icon === undefined 
+            ?  "favIconPlaceholder.png" : tab.icon;
         element.style.height = "16px";
         cell.appendChild(element);
         cell.style.width = "16px";
         row.appendChild(cell);
 
         cell = document.createElement('td'); //row.insertCell(1);
-        title = tab.title; 
+        title = tab === undefined || tab.title === undefined 
+            ?  "" : tab.title;
         if (title.length > maxTitleLength) {
             title = title.substring(0, maxTitleLength) + " ...";
         }
         element = document.createTextNode(title);
         cell.appendChild(element);
-        //cell.style.width = "30px";
         row.appendChild(cell);
 
         count++;

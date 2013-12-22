@@ -5,7 +5,7 @@
     "description": "Gives you a list of tabs in Most Recently Used (MRU) order. Triggered by Ctrl-Tab or Alt-Tab.",
     "author": "Prince Samuel",
     "license": "MPL 2.0",
-    "version": "0.6",
+    "version": "0.61",
     "permissions": {"private-browsing": true},
 
     "preferences": [
@@ -13,7 +13,7 @@
         "name": "activateKey",
         "type": "radio",
         "title": "Trigger Key Combination",
-        "description": "Note: Use Alt-Tab only with Macs.",
+        "description": "Note: Use Alt-Tab only with Macs. Requires restart.",
         "value": "ctrl",
         "options": [
         {
