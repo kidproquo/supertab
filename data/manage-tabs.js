@@ -13,15 +13,33 @@ var maxTitleLength = 50;
 function onKeyUp(event)
 {
     //lazy way to determine keyup - 17 is ctrl, 18 is alt
-    if (event.keyCode === 17 || event.keyCode === 18) {
-        self.port.emit("dismissPanel", tabList[selectedIndex].id);
-        window.removeEventListener("keyup", onKeyUp, false);
-
+    if (!event.altKey && !event.ctrlKey) {
+        dismiss();
+        return;
     }
 }
 
+function onKeyDown(event)
+{
+    if (!event.altKey && !event.ctrlKey) {
+        dismiss();
+        return;
+    }
+
+    //tab key code is 9
+    if (event.keyCode === 9) {
+        CycleTabs(event.shiftKey);
+    }
+}
+
+function dismiss() {
+    window.removeEventListener("keyup", onKeyUp, false);
+    window.removeEventListener("keydown", onKeyDown, false);
+    self.port.emit("dismissPanel", tabList[selectedIndex].id);
+}
 self.port.on("show", function onShow() {
     window.addEventListener("keyup", onKeyUp, false);
+    window.addEventListener("keydown", onKeyDown, false);
     window.focus();
 });
 
@@ -70,8 +88,8 @@ function createTable(reverse)
     }
 
     self.port.emit('resize', 
-            { width: document.documentElement.clientWidth, 
-                height: document.documentElement.clientHeight });
+            { width: document.body.clientWidth, 
+                height: document.body.clientHeight });
 }
 
 self.port.on("cycleTabs", function onCycleTabs() {
