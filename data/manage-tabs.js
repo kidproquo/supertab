@@ -5,45 +5,12 @@
  * */
 
 var selectedIndex = 0;
-var rowCount = 0;
 var rows = [];
 var tabList = [];
 var maxTitleLength = 50;
 
-function onKeyUp(event)
-{
-    //lazy way to determine keyup - 17 is ctrl, 18 is alt
-    if (!event.altKey && !event.ctrlKey) {
-        dismiss();
-        return;
-    }
-}
-
-function onKeyDown(event)
-{
-    if (!event.altKey && !event.ctrlKey) {
-        dismiss();
-        return;
-    }
-
-    //tab key code is 9
-    if (event.keyCode === 9) {
-        CycleTabs(event.shiftKey);
-    }
-}
-
-function dismiss() {
-    window.removeEventListener("keyup", onKeyUp, false);
-    window.removeEventListener("keydown", onKeyDown, false);
-    self.port.emit("dismissPanel", tabList[selectedIndex].id);
-}
-self.port.on("show", function onShow() {
-    window.addEventListener("keyup", onKeyUp, false);
-    window.addEventListener("keydown", onKeyDown, false);
-    window.focus();
-});
-
-self.port.on("create", function onShow(tabLst, reverse) {
+//upon receiving the "create" event, create the table
+self.port.on("create", function onCreate(tabLst, reverse) {
     tabList = tabLst;
     createTable(reverse);
 });
@@ -80,8 +47,10 @@ function createTable(reverse)
 
     }
     old_tbody.parentNode.replaceChild(new_tbody, old_tbody);
+
+    //I like the ternary operator
     selectedIndex = count > 1 ? reverse?count-1:1 : 0;
-    rowCount = count;
+
     rows = new_tbody.getElementsByTagName('tr');
     if (rows.length > 0) {
         rows[selectedIndex].className = 'highlighted';
@@ -92,16 +61,44 @@ function createTable(reverse)
                 height: document.body.clientHeight });
 }
 
-self.port.on("cycleTabs", function onCycleTabs() {
-    CycleTabs(false);
+//register the key event listeners to show the tab-cycling 
+self.port.on("show", function onShow() {
+    window.addEventListener("keyup", onKeyUp, false);
+    window.addEventListener("keydown", onKeyDown, false);
+
+    //focus the created panel, or else the keybindings don't work
+    window.focus();
 });
 
-self.port.on("cycleTabsReverse", function onCycleTabs() {
-    CycleTabs(true);
-});
+function onKeyUp(event)
+{
+    //if neither of the modifier keys are pressed then dismiss the panel
+    if (!event.altKey && !event.ctrlKey) {
+        dismiss();
+        return;
+    }
+}
+
+function dismiss() {
+    window.removeEventListener("keyup", onKeyUp, false);
+    window.removeEventListener("keydown", onKeyDown, false);
+    self.port.emit("dismissPanel", tabList[selectedIndex].id);
+}
+
+function onKeyDown(event)
+{
+    if (!event.altKey && !event.ctrlKey) {
+        dismiss();
+        return;
+    }
+
+    //tab key code is 9
+    if (event.keyCode === 9) {
+        CycleTabs(event.shiftKey);
+    }
+}
 
 function CycleTabs(reverse) {
-
     if (rows.length === 0) {
         return;
     }
@@ -114,17 +111,16 @@ function CycleTabs(reverse) {
 
     var prevIndex = selectedIndex;
 
-    reverse ? selectedIndex-- :selectedIndex++;
-    if (selectedIndex === rowCount) {
+    reverse ? selectedIndex-- : selectedIndex++;
+    if (selectedIndex === rows.length) {
         selectedIndex = 0;
     }
 
-    if (selectedIndex == -1) {
-        selectedIndex = rowCount - 1;
+    if (selectedIndex === -1) {
+        selectedIndex = rows.length - 1;
     }
 
     rows[selectedIndex].className = 'highlighted';
     rows[prevIndex].className = '';
-
 }
 
