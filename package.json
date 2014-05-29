@@ -5,7 +5,7 @@
     "description": "Gives you a list of tabs in Most Recently Used (MRU) order. Triggered by Ctrl-Tab or Alt-Tab.",
     "author": "Prince Samuel",
     "license": "MPL 2.0",
-    "version": "0.67",
+    "version": "0.68",
     "permissions": {"private-browsing": true},
 
     "preferences": [
