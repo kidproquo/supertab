@@ -34,7 +34,7 @@
         "title": "Max Tab Count"
     },
     {
-    "description": "Focus previous MRU tab on tab close?",
+    "description": "Focus previous MRU tab on tab close (change requires restart)?",
     "type": "bool",
     "name": "activatePrevious",
     "value": true,
